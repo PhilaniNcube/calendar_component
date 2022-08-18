@@ -1,84 +1,118 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import {Fragment } from 'react'
+import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/solid'
+import {Menu, Transition} from '@headlessui/react'
+import {DotsVerticalIcon} from '@heroicons/react/outline'
+import { eachDayOfInterval, endOfMonth, format, startOfToday } from 'date-fns'
+import { startOfMonth } from 'date-fns/esm'
+
+
+
+
+const days = [
+  {date: '2021-12-27'},
+  {date: '2021-12-28'},
+  {date: '2021-12-29'},
+  {date: '2021-12-30'},
+  {date: '2021-12-31'},
+  {date: '2022-01-01', isCurrentMonth: true},
+  {date: '2022-01-02', isCurrentMonth: true},
+  {date: '2022-01-03', isCurrentMonth: true},
+  {date: '2022-01-04', isCurrentMonth: true},
+  {date: '2022-01-05', isCurrentMonth: true},
+  {date: '2022-01-06', isCurrentMonth: true},
+  {date: '2022-01-07', isCurrentMonth: true},
+  {date: '2022-01-08', isCurrentMonth: true},
+  {date: '2022-01-09', isCurrentMonth: true},
+  {date: '2022-01-10', isCurrentMonth: true},
+  {date: '2022-01-11', isCurrentMonth: true},
+  {date: '2022-01-12', isCurrentMonth: true, isToday: true},
+  {date: '2022-01-13', isCurrentMonth: true},
+  {date: '2022-01-14', isCurrentMonth: true},
+  {date: '2022-01-15', isCurrentMonth: true},
+  {date: '2022-01-16', isCurrentMonth: true},
+  {date: '2022-01-17', isCurrentMonth: true},
+  {date: '2022-01-18', isCurrentMonth: true},
+  {date: '2022-01-19', isCurrentMonth: true},
+  {date: '2022-01-20', isCurrentMonth: true},
+  {date: '2022-01-21', isCurrentMonth: true},
+  {date: '2022-01-22', isCurrentMonth: true},
+  {date: '2022-01-23', isCurrentMonth: true},
+  {date: '2022-01-24', isCurrentMonth: true},
+  {date: '2022-01-25', isCurrentMonth: true},
+  {date: '2022-01-26', isCurrentMonth: true},
+  {date: '2022-01-27', isCurrentMonth: true},
+  {date: '2022-01-28', isCurrentMonth: true},
+  {date: '2022-01-29', isCurrentMonth: true},
+  {date: '2022-01-30', isCurrentMonth: true},
+  {date: '2022-01-31', isCurrentMonth: true},
+  {date: '2022-02-01', isCurrentMonth: false},
+  {date: '2022-02-02', isCurrentMonth: false},
+
+]
+
+const meetings = [
+  {
+    id: 1,
+    name: "Leslie Alexander",
+    imageUrl:
+      "https://images.unsplash.com/photo-1502877828070-33b167ad6860?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=605&q=80",
+    start: "1:00 PM",
+    startDateTime: "2022-01-21T13:00",
+    end: "2:30 PM",
+    endDateTime: "2022-01-21T14:30",
+  },
+];
+
+function classNames(...classes: string[]): string{
+  return classes.filter(Boolean).join(' ')
+}
+
 
 const Home: NextPage = () => {
+
+  const today = startOfToday()
+
+ let newDays = eachDayOfInterval({start: startOfMonth(today), end: endOfMonth(today)})
+
+ console.log(newDays)
+
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div className="pt-16">
+      <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
+        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
+          <div className="md:pr-16">
+            <div className="flex items-center">
+              <h2 className="flex-auto font-semibold text-gray-900">
+                {format(today, 'MMM yyyy')}
+              </h2>
+              <button type="button" className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
+                <span className="sr-only">Previous Month</span>
+                <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
+              </button>
+              <button type="button" className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500">
+                <span className="sr-only">Next Month</span>
+                <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
+              </button>
+            </div>
+            <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
+              <div>M</div>
+              <div>T</div>
+              <div>W</div>
+              <div>T</div>
+              <div>F</div>
+              <div>S</div>
+              <div>S</div>
+            </div>
+            <div className="grid grid-cols-7 mt-2 text-sm">
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
-
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            </div>
+          </div>
         </div>
-      </main>
-
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
-      </footer>
+      </div>
     </div>
   )
 }
